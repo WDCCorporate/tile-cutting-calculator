@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* เปลี่ยนจาก center เพื่อให้เนื้อหาไม่อัดกันมากไป */
+    min-height: 100vh;
+    background-color: #f4f7f6;
+    margin: 20px; /* เพิ่ม margin เพื่อไม่ให้ติดขอบจอเกินไป */
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap; /* ให้ input ลงบรรทัดใหม่ได้ถ้าหน้าจอเล็ก */
+    align-items: center;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    width: 100%; /* ให้ label อยู่บรรทัดของตัวเอง */
+}
+
+.input-group input[type="number"] {
+    flex: 1; /* ทำให้ input ขยายเต็มพื้นที่ */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    min-width: 80px; /* ขนาดขั้นต่ำของ input */
+}
+
+.input-group span {
+    margin: 0 10px;
+    font-weight: bold;
+    color: #777;
+}
+
+.input-group input[type="number"]:nth-of-type(1) {
+    margin-right: 5px; /* เว้นระยะห่างระหว่าง input กว้างกับยาว */
+}
+.input-group input[type="number"]:nth-of-type(2) {
+    margin-left: 5px; /* เว้นระยะห่างระหว่าง input กว้างกับยาว */
+}
+/* สำหรับ input พื้นที่ ตรม. */
+#areaSqM {
+    width: calc(100% - 22px); /* ลบ padding และ border */
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.result-box {
+    background-color: #e9f7ef;
+    border: 1px solid #c8e6d9;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.result-box h2 {
+    color: #2e7d32;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.result-box p {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.result-box strong {
+    color: #1b5e20;
+    font-size: 22px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .input-group input[type="number"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .input-group span {
+        display: none; /* ซ่อน 'x' บนมือถือถ้า layout แยกกัน */
+    }
+    .input-group input[type="number"]:nth-of-type(1) {
+        margin-right: 0;
+    }
+    .input-group input[type="number"]:nth-of-type(2) {
+        margin-left: 0;
+    }
+}
