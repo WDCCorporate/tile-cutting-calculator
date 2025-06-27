@@ -70,7 +70,7 @@ h1 {
 
 
 button {
-    background-color: #4CAF50;
+    background-color: #f2bd0c;
     color: white;
     padding: 12px 25px;
     border: none;
@@ -86,8 +86,8 @@ button:hover {
 }
 
 .result-box {
-    background-color: #e9f7ef;
-    border: 1px solid #c8e6d9;
+    background-color: #fff2bd;
+    border: 1px solid #fff0a3;
     padding: 20px;
     margin-top: 30px;
     border-radius: 8px;
@@ -95,7 +95,7 @@ button:hover {
 }
 
 .result-box h2 {
-    color: #2e7d32;
+    color: #f2bd0c;
     margin-top: 0;
     margin-bottom: 15px;
     font-size: 20px;
@@ -107,7 +107,7 @@ button:hover {
 }
 
 .result-box strong {
-    color: #1b5e20;
+    color: #f2bd0c;
     font-size: 22px;
 }
 
