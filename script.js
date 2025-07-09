@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const tileWidthInput = document.getElementById('tileWidth');
-    const tileLengthInput = document.getElementById('tileLength');
-    const cutWidthInput = document.getElementById('cutWidth');
-    const cutLengthInput = document.getElementById('cutLength');
+    const originalTileSizeSelect = document.getElementById('originalTileSize');
+    const cutTileSizeSelect = document.getElementById('cutTileSize');
     const areaSqMInput = document.getElementById('areaSqM');
     const calculateBtn = document.getElementById('calculateBtn');
 
@@ -13,9 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const costPerSqMCut = document.getElementById('costPerSqMCut');
     const totalCuttingCost = document.getElementById('totalCuttingCost');
 
-    // *** ข้อมูลราคาค่าตัดใหม่ที่คุณให้มา ***
-    // โครงสร้างข้อมูล: { 'ขนาดตั้งต้น_กว้างxยาว': { 'ขนาดที่ตัด_กว้างxยาว': ราคาต่อตรม. } }
-    // ตัวอย่าง: '30x60': { '10x60': 520, '15x60': 245, ... }
+    // ข้อมูลราคาค่าตัด
     const cuttingCosts = {
         '30x60': {
             '10x60': 520, '15x60': 245, '20x60': 130, '10x30': 670, '15x30': 455,
@@ -57,65 +53,120 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    function populateOriginalTileSizes() {
+        // Clear existing options
+        originalTileSizeSelect.innerHTML = '';
+        // Add a default disabled option
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'เลือกขนาดกระเบื้องเดิม';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        originalTileSizeSelect.appendChild(defaultOption);
+
+        // Populate with unique keys from cuttingCosts
+        Object.keys(cuttingCosts).forEach(size => {
+            const option = document.createElement('option');
+            option.value = size;
+            option.textContent = size.replace('x', ' x ');
+            originalTileSizeSelect.appendChild(option);
+        });
+    }
+
+    function populateCutTileSizes(selectedOriginalSize) {
+        cutTileSizeSelect.innerHTML = ''; // Clear existing options
+        cutTileSizeSelect.disabled = true; // Disable until a valid original size is selected
+
+        if (selectedOriginalSize && cuttingCosts[selectedOriginalSize]) {
+            const cutSizes = Object.keys(cuttingCosts[selectedOriginalSize]);
+            if (cutSizes.length > 0) {
+                cutTileSizeSelect.disabled = false;
+                // Add a default disabled option for cut size
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'เลือกขนาดที่ต้องการตัด';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                cutTileSizeSelect.appendChild(defaultOption);
+
+                cutSizes.forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.textContent = size.replace('x', ' x ');
+                    cutTileSizeSelect.appendChild(option);
+                });
+            }
+        }
+        // Reset display if no cut sizes are available or selected
+        displayCutSize.textContent = 'N/A';
+    }
+
+    // Event listener for when original tile size changes
+    originalTileSizeSelect.addEventListener('change', function() {
+        populateCutTileSizes(this.value);
+        resetResults(); // Reset results when original tile size changes
+    });
+
+    // Event listener for when cut tile size changes
+    cutTileSizeSelect.addEventListener('change', function() {
+        calculateCuttingCost();
+    });
+
     calculateBtn.addEventListener('click', calculateCuttingCost);
 
-    // เพิ่ม event listener สำหรับการกด Enter ในช่อง input ทั้งหมด
-    document.querySelectorAll('.input-group input[type="number"]').forEach(input => {
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calculateCuttingCost();
-            }
-        });
+    // เพิ่ม event listener สำหรับการกด Enter ในช่อง input พื้นที่
+    areaSqMInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            calculateCuttingCost();
+        }
     });
 
     function calculateCuttingCost() {
-        const tileWidth = parseFloat(tileWidthInput.value);
-        const tileLength = parseFloat(tileLengthInput.value);
-        const cutWidth = parseFloat(cutWidthInput.value);
-        const cutLength = parseFloat(cutLengthInput.value);
+        const originalTileSize = originalTileSizeSelect.value;
+        const cutTileSize = cutTileSizeSelect.value;
         const areaSqM = parseFloat(areaSqMInput.value);
 
-        // ตรวจสอบค่าที่ป้อน
-        if (isNaN(tileWidth) || isNaN(tileLength) || isNaN(cutWidth) || isNaN(cutLength) || isNaN(areaSqM) ||
-            tileWidth <= 0 || tileLength <= 0 || cutWidth <= 0 || cutLength <= 0 || areaSqM <= 0) {
-            alert('กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง (ต้องเป็นตัวเลขและมากกว่า 0)');
+        if (!originalTileSize || !cutTileSize || isNaN(areaSqM) || areaSqM <= 0) {
+            alert('กรุณาเลือกขนาดกระเบื้องและระบุพื้นที่รวมที่ต้องการตัดให้ถูกต้อง');
             resetResults();
             return;
         }
+
+        const [tileWidth, tileLength] = originalTileSize.split('x').map(Number);
+        const [cutWidth, cutLength] = cutTileSize.split('x').map(Number);
 
         displayTileSize.textContent = `${tileWidth} ซม. x ${tileLength} ซม.`;
         displayCutSize.textContent = `${cutWidth} ซม. x ${cutLength} ซม.`;
 
-        // สร้าง key สำหรับค้นหาราคาค่าตัด
-        const originalTileKey = `${tileWidth}x${tileLength}`;
-        const originalTileKeyRotated = `${tileLength}x${tileWidth}`; // เผื่อกรณีป้อนสลับด้าน
-
-        const cutSizeKey = `${cutWidth}x${cutLength}`;
-        const cutSizeKeyRotated = `${cutLength}x${cutWidth}`; // เผื่อกรณีป้อนสลับด้าน
-
         let costPerSqM = 0;
-        let foundPrice = false;
-
-        // ตรวจสอบราคาจากขนาดตั้งต้นที่ป้อนโดยตรง
-        if (cuttingCosts[originalTileKey] && (cuttingCosts[originalTileKey][cutSizeKey] !== undefined || cuttingCosts[originalTileKey][cutSizeKeyRotated] !== undefined)) {
-            costPerSqM = cuttingCosts[originalTileKey][cutSizeKey] || cuttingCosts[originalTileKey][cutSizeKeyRotated];
-            foundPrice = true;
+        // Check for direct match first
+        if (cuttingCosts[originalTileSize] && cuttingCosts[originalTileSize][cutTileSize] !== undefined) {
+            costPerSqM = cuttingCosts[originalTileSize][cutTileSize];
+        } else {
+            // Check for rotated cut size if direct match not found
+            const [cutWidthRotated, cutLengthRotated] = [cutLength, cutWidth];
+            const cutTileSizeRotated = `${cutWidthRotated}x${cutLengthRotated}`;
+            if (cuttingCosts[originalTileSize] && cuttingCosts[originalTileSize][cutTileSizeRotated] !== undefined) {
+                costPerSqM = cuttingCosts[originalTileSize][cutTileSizeRotated];
+            } else {
+                // If still not found, try original tile size rotated
+                const [tileWidthRotated, tileLengthRotated] = [tileLength, tileWidth];
+                const originalTileSizeRotated = `${tileWidthRotated}x${tileLengthRotated}`;
+                if (cuttingCosts[originalTileSizeRotated] && cuttingCosts[originalTileSizeRotated][cutTileSize] !== undefined) {
+                    costPerSqM = cuttingCosts[originalTileSizeRotated][cutTileSize];
+                } else if (cuttingCosts[originalTileSizeRotated] && cuttingCosts[originalTileSizeRotated][cutTileSizeRotated] !== undefined) {
+                    costPerSqM = cuttingCosts[originalTileSizeRotated][cutTileSizeRotated];
+                } else {
+                     alert(`ไม่พบราคาค่าตัดสำหรับกระเบื้องขนาดตั้งต้น ${originalTileSize} และขนาดที่ตัด ${cutTileSize} ในฐานข้อมูล กรุณาตรวจสอบข้อมูล`);
+                     resetResults();
+                     return;
+                }
+            }
         }
-        // ถ้าไม่พบในขนาดตั้งต้นที่ป้อน ให้ลองขนาดตั้งต้นแบบกลับด้าน
-        else if (cuttingCosts[originalTileKeyRotated] && (cuttingCosts[originalTileKeyRotated][cutSizeKey] !== undefined || cuttingCosts[originalTileKeyRotated][cutSizeKeyRotated] !== undefined)) {
-            costPerSqM = cuttingCosts[originalTileKeyRotated][cutSizeKey] || cuttingCosts[originalTileKeyRotated][cutSizeKeyRotated];
-            foundPrice = true;
-        }
-
-        if (!foundPrice) {
-            alert(`ไม่พบราคาค่าตัดสำหรับกระเบื้องขนาดตั้งต้น ${tileWidth}x${tileLength} และขนาดที่ตัด ${cutWidth}x${cutLength} ในฐานข้อมูล กรุณาตรวจสอบข้อมูล หรือเพิ่มราคาใน 'cuttingCosts' ใน script.js`);
-            resetResults();
-            return;
-        }
-
+        
         costPerSqMCut.textContent = costPerSqM.toFixed(2);
 
-        // คำนวณจำนวนชิ้นที่ได้จากกระเบื้อง 1 แผ่น (ยังคงใช้การคำนวณนี้เพื่อหาจำนวนแผ่นที่ต้องใช้)
+        // Calculate pieces from tile (using both orientations)
         const piecesWidthNormal = Math.floor(tileWidth / cutWidth);
         const piecesLengthNormal = Math.floor(tileLength / cutLength);
         const piecesOption1 = piecesWidthNormal * piecesLengthNormal;
@@ -133,14 +184,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         piecesPerTile.textContent = piecesFromTile;
 
-        // คำนวณจำนวนกระเบื้องที่ต้องใช้ทั้งหมด (ประมาณการ)
+        // Calculate total tiles needed
         const cutTileAreaCm2 = cutWidth * cutLength;
         const piecesNeededTotal = Math.ceil(areaSqM / (cutTileAreaCm2 / 10000));
         const totalTilesNeeded = Math.ceil(piecesNeededTotal / piecesFromTile);
 
         tilesNeeded.textContent = totalTilesNeeded;
 
-        // คำนวณค่าตัดทั้งหมด
+        // Calculate total cutting cost
         const totalCost = areaSqM * costPerSqM;
         totalCuttingCost.textContent = totalCost.toFixed(2);
     }
@@ -154,6 +205,8 @@ document.addEventListener('DOMContentLoaded', function() {
         totalCuttingCost.textContent = '0.00';
     }
 
-    // เริ่มต้นคำนวณเมื่อโหลดหน้า เพื่อแสดงค่าเริ่มต้น
-    calculateCuttingCost();
+    // Initial population of dropdowns and calculation on page load
+    populateOriginalTileSizes();
+    // Initially disable cut tile size dropdown until an original size is selected
+    cutTileSizeSelect.disabled = true;
 });
