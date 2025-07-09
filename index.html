@@ -3,45 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องคำนวณค่าตัดกระเบื้อง</title>
+    <title>หน้าแรกเครื่องคำนวณ</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="landing-page">
     <div class="container">
-        <h1>เครื่องคำนวณค่าตัดกระเบื้อง</h1>
-
-        <div class="input-group">
-            <label for="tileWidth">ขนาดกระเบื้องเดิม (ซม.):</label>
-            <input type="number" id="tileWidth" placeholder="ความกว้าง" min="1" value="60">
-            <span>x</span>
-            <input type="number" id="tileLength" placeholder="ความยาว" min="1" value="60">
-        </div>
-
-        <div class="input-group">
-            <label for="cutWidth">ขนาดที่ต้องการตัด (ซม.):</label>
-            <input type="number" id="cutWidth" placeholder="ความกว้างที่ต้องการ" min="1" value="30">
-            <span>x</span>
-            <input type="number" id="cutLength" placeholder="ความยาวที่ต้องการ" min="1" value="60">
-        </div>
-
-        <div class="input-group">
-            <label for="areaSqM">พื้นที่รวมที่ต้องการตัด (ตารางเมตร):</label>
-            <input type="number" id="areaSqM" placeholder="เช่น 10" min="0.01" step="0.01" value="10">
-        </div>
-
-        <button id="calculateBtn">คำนวณค่าตัด</button>
-
-        <div class="result-box">
-            <h2>ผลลัพธ์:</h2>
-            <p>ขนาดกระเบื้องเดิม: <span id="displayTileSize"></span></p>
-            <p>ขนาดที่ตัด: <span id="displayCutSize"></span></p>
-            <p>จำนวนชิ้นที่ได้จากกระเบื้อง 1 แผ่น: <span id="piecesPerTile">0</span> ชิ้น</p>
-            <p>จำนวนกระเบื้องที่ต้องใช้ทั้งหมด: <span id="tilesNeeded">0</span> แผ่น</p>
-            <p>ค่าตัดต่อตารางเมตร (ตามขนาดที่ตัด): <span id="costPerSqMCut">0.00</span> บาท</p>
-            <p><strong>รวมค่าตัดทั้งหมด: <span id="totalCuttingCost">0.00</span> บาท</strong></p>
+        <h1>เลือกเครื่องคำนวณ</h1>
+        <div class="button-group">
+            <a href="tile-cutting-calculator.html" class="btn">เครื่องคำนวณค่าตัดกระเบื้อง</a>
+            <a href="tile-installation-calculator.html" class="btn">เครื่องคำนวณค่าบริการติดตั้งกระเบื้อง</a>
         </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
