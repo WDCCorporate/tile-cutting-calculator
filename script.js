@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const displayTileSize = document.getElementById('displayTileSize');
     const displayCutSize = document.getElementById('displayCutSize');
     const piecesPerTile = document.getElementById('piecesPerTile');
+	    const actualCutPieces = document.getElementById('actualCutPieces');
     const tilesNeeded = document.getElementById('tilesNeeded');
     const costPerSqMCut = document.getElementById('costPerSqMCut');
     const totalCuttingCost = document.getElementById('totalCuttingCost');
@@ -191,6 +192,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         tilesNeeded.textContent = totalTilesNeeded;
 
+        // เพิ่มการคำนวณจำนวนกระเบื้องที่ได้หลังตัดทั้งหมด
+        const actualTotalCutPieces = totalTilesNeeded * piecesFromTile;
+        actualCutPieces.textContent = actualTotalCutPieces;
+
         // Calculate total cutting cost
         const totalCost = areaSqM * costPerSqM;
         totalCuttingCost.textContent = totalCost.toFixed(2);
@@ -200,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
         displayTileSize.textContent = 'N/A';
         displayCutSize.textContent = 'N/A';
         piecesPerTile.textContent = '0';
+        actualCutPieces.textContent = '0';
         tilesNeeded.textContent = '0';
         costPerSqMCut.textContent = '0.00';
         totalCuttingCost.textContent = '0.00';
