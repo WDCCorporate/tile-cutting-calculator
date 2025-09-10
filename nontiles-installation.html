@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องคำนวณค่าบริการติดตั้ง NonTiles</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="nontiles-installation.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>เครื่องคำนวณค่าบริการติดตั้ง NonTiles</h1>
+        <div class="input-group">
+            <label for="serviceSelect">เลือกรายการบริการ:</label>
+            <select id="serviceSelect"></select>
+        </div>
+        <div class="input-group">
+            <label for="quantityInput">ระบุจำนวน <span id="unitDisplay"></span>:</label>
+            <input type="number" id="quantityInput" placeholder="ตัวอย่าง: 10.5">
+            
+        </div>
+        <button id="calculateInstallationBtn">คำนวณ</button>
+
+        <div class="result-box">
+            <h2>สรุปค่าบริการติดตั้ง</h2>
+            <p><strong>รายการบริการ:</strong> <span id="displayService">N/A</span></p>
+            <p><strong>จำนวน:</strong> <span id="displayQuantity">N/A</span></p>
+            <p><strong>ราคาต่อหน่วย:</strong> <span id="displayUnitPrice">0.00</span> บาท</p>
+            <hr style="border-top: 1px solid #ccc; margin: 15px 0;">
+            <p><strong>รวมค่าบริการติดตั้ง:</strong> <strong id="totalInstallationCost">0.00</strong> บาท</p>
+        </div>
+
+        <a href="installation-options.html" class="btn back-to-home">กลับหน้าเลือกประเภท</a>
+    </div>
+</body>
+</html>

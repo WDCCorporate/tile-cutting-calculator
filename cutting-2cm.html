@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องคำนวณค่าตัดกระเบื้องหนา 2 CM.</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="cutting-2cm.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>เครื่องคำนวณค่าตัดกระเบื้องหนา 2 CM.</h1>
+        <div class="input-group">
+            <label for="originalTileSize">ขนาดกระเบื้องเดิม (ซม.):</label>
+            <select id="originalTileSize"></select>
+        </div>
+        <div class="input-group">
+            <label for="cutTileSize">ขนาดที่ต้องการตัด (ซม.):</label>
+            <select id="cutTileSize" disabled></select>
+        </div>
+        <div class="input-group">
+            <label for="areaSqM">พื้นที่รวมที่ต้องการตัด (ตร.ม.):</label>
+			<input type="number" id="areaSqM" placeholder="เช่น 10" min="0.01" step="0.01" value="1">
+        </div>
+        <button id="calculateBtn">คำนวณ</button>
+
+        <div class="result-box">
+            <h2>ผลการคำนวณ</h2>
+            <p><strong>กระเบื้องเดิม:</strong> <span id="displayTileSize">N/A</span></p>
+            <p><strong>ขนาดที่ตัด:</strong> <span id="displayCutSize">N/A</span></p>
+            <p><strong>จำนวนชิ้นที่ตัดได้ต่อกระเบื้อง 1 แผ่น:</strong> <span id="piecesPerTile">0</span> ชิ้น</p>
+            <p><strong>จำนวนแผ่นกระเบื้องเดิมที่ต้องใช้:</strong> <span id="tilesNeeded">0</span> แผ่น</p>
+            <p><strong>จำนวนชิ้นที่ได้หลังตัดทั้งหมด:</strong> <span id="actualCutPieces">0</span> ชิ้น</p>
+            <p><strong>ราคาค่าตัดต่อ ตร.ม.:</strong> <span id="costPerSqMCut">0.00</span> บาท</p>
+            <hr style="border-top: 1px solid #ccc; margin: 15px 0;">
+            <p><strong>รวมค่าตัดทั้งหมด:</strong> <strong id="totalCuttingCost">0.00</strong> บาท</p>
+        </div>
+
+        <a href="cutting-options.html" class="btn back-to-home">กลับหน้าเลือกประเภท</a>
+    </div>
+</body>
+</html>
