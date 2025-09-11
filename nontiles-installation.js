@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'ติดตั้ง วีว่า บอร์ด,ไม้อัด (ไม่เกิน 10 มิล)', price: 615.00, unit: 'ตรม.' },
         { name: 'ค่าโพเทคพื้น (ไม่รวมอุปกรณ์)', price: 45.00, unit: 'ตรม.' },
         { name: 'ค่าโพเทคพื้น (รวมอุปกรณ์ กระดาษลูกฟูก ,เทปกาว)', price: 100.00, unit: 'ตรม.' },
-        { name: 'ค่าเดินทางต่างจังหวัด กิโลละ 10 บาท (คิดขาเดียว) เริ่มนับจากคลังล˚าลูกกา', price: 15.00, unit: 'กม.' },
+        { name: 'ค่าเดินทางต่างจังหวัด กิโลละ 10 บาท (คิดขาเดียว) เริ่มนับจากคลังลำลูกกา', price: 15.00, unit: 'กม.' },
         { name: 'ค่าที่พัก /คืน', price: 1500.00, unit: 'คืน' }
     ];
 
@@ -104,4 +104,5 @@ document.addEventListener('DOMContentLoaded', function() {
     populateServiceOptions();
     updateUnitDisplay();
     resetInstallationResults();
+
 });
