@@ -27,7 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'ทำกันชื้น', price: 315.00, unit: 'ตรม.' },
         { name: 'โพเทคพื้น,กระดาษลูกฟูก (เทปกาวช่าง)', price: 45.00, unit: 'ตรม.' },
         { name: 'งานเข้ามุม 45 องศา / เมตร', price: 285.00, unit: 'เมตร' },
-        { name: 'เจารูกลมด้วยหัวเพชร / รู', price: 335.00, unit: 'รู' }
+        { name: 'เจารูกลมด้วยหัวเพชร / รู', price: 335.00, unit: 'รู' },
+        { name: 'เจียร์45องศาลบมุม(หนึ่งด้าน) / เมตร', price: 143.00, unit: 'เมตร' },
+		{ name: 'เจียร์45องศาลบมุม(สองด้าน) / เมตร', price: 286.00, unit: 'เมตร' },
+		{ name: 'เจียร์45องศาเข้ามุม(ปากประกบ90องศา) / เมตร', price: 314.00, unit: 'เมตร' },
+		{ name: 'เจียร์ขอบโค้งครึ่งวงกลม / เมตร', price: 314.00, unit: 'เมตร' },
+		{ name: 'เจียร์ขอบโค้งวงกลม / เมตร', price: 314.00, unit: 'เมตร' },
+		{ name: 'เจียร์ขอบโค้งวงกลมเจียรขอบมุมมนซองบุหรี่(สองด้าน) / เมตร', price: 257.00, unit: 'เมตร' }
     ];
 
     function populateServiceOptions() {
@@ -97,3 +103,4 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUnitDisplay(); // Set initial unit display
     resetInstallationResults(); // Ensure results are reset on load
 });
+
