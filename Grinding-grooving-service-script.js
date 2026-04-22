@@ -1,0 +1,110 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const serviceSelect = document.getElementById('serviceSelect');
+    const quantityInput = document.getElementById('quantityInput');
+    const unitDisplay = document.getElementById('unitDisplay');
+    const calculateInstallationBtn = document.getElementById('calculateInstallationBtn');
+
+    const displayService = document.getElementById('displayService');
+    const displayQuantity = document.getElementById('displayQuantity');
+    const displayUnitPrice = document.getElementById('displayUnitPrice');
+    const totalInstallationCost = document.getElementById('totalInstallationCost');
+
+    // รายการและราคาค่าบริการ
+    const servicePrices = [
+        { name: 'งานเข้ามุม 45 องศา / เมตร', price: 285.00, unit: 'เมตร' },
+        { name: 'เจารูกลมด้วยหัวเพชร / รู', price: 335.00, unit: 'รู' },
+		{ name: 'เจียร์45องศาลบมุม(หนึ่งด้าน) 60 cm หนา 2 cm/ ตรม.', price: 520.00, unit: 'ตรม.' },
+		{ name: 'เจียร์45องศาลบมุม(หนึ่งด้าน) 120 cm หนา 2 cm/ ตรม.', price: 1040.00, unit: 'ตรม.' },
+		{ name: 'เจียร์45องศาลบมุม(หนึ่งด้าน) 60 cm หนา 1 cm/ ตรม.', price: 430.00, unit: 'ตรม.' },
+		{ name: 'เจียร์45องศาลบมุม(หนึ่งด้าน) 120 cm หนา 1 cm/ ตรม.', price: 860.00, unit: 'ตรม.' },
+		{ name: 'เจียร์45องศาลบมุม(สองด้าน) 60 cm หนา 2 cm/ ตรม.', price: 920.00, unit: 'ตรม.' },
+		{ name: 'เจียร์45องศาลบมุม(สองด้าน) 120 cm หนา 2 c/ ตรม.', price: 1840.00, unit: 'ตรม.' },
+		{ name: 'เจียร์45องศาลบมุม(สองด้าน) 60 cm หนา 1 cm/ ตรม.', price: 830.00, unit: 'ตรม.' },
+		{ name: 'เจียร์45องศาลบมุม(สองด้าน) 120 cm หนา 1 c/ ตรม.', price: 1660.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งครึ่งวงกลม 60 cm หนา 2 cm/ ตรม.', price: 1500.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งครึ่งวงกลม 120 cm หนา 2 cm/ ตรม.', price: 3000.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งครึ่งวงกลม 60 cm หนา 1 cm/ ตรม.', price: 775.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งครึ่งวงกลม 120 cm หนา 1 cm/ ตรม.', price: 1550.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งวงกลม 60 cm หนา 2 cm/ ตรม.', price: 1630.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งวงกลม 120 cm หนา 2 cm/ ตรม.', price: 3260.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งวงกลม 60 cm หนา 1 cm/ ตรม.', price: 830.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบโค้งวงกลม 120 cm หนา 1 cm/ ตรม.', price: 1660.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบบนซองบุหรี่(สองด้าน) 60 cm หนา 2 cm/ ตรม.', price: 1300.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบบนซองบุหรี่(สองด้าน) 120 cm หนา 2 cm/ ตรม.', price: 2600.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบบนซองบุหรี่(สองด้าน) 60 cm หนา 1 cm/ ตรม.', price: 675.00, unit: 'ตรม.' },
+		{ name: 'เจียร์ขอบบนซองบุหรี่(สองด้าน) 120 cm หนา 1 cm/ ตรม.', price: 1350.00, unit: 'ตรม.' },
+		{ name: 'เซาะร่องกว้าง 2-5 mm ลึก 2 มิล 1 เส้น 120 cm / ตรม.', price: 230.00, unit: 'ตรม.' },
+		{ name: 'เซาะร่องกว้าง 2-5 mm ลึก 2 มิล 2 เส้น 120 cm / ตรม.', price: 390.00, unit: 'ตรม.' },
+		{ name: 'เซาะร่องกว้าง 2-5 mm ลึก 2 มิล 3 เส้น 120 cm / ตรม.', price: 550.00, unit: 'ตรม.' },
+		{ name: 'เซาะร่องกว้าง 2-5 mm ลึก 2 มิล 1 เส้น 60 cm / ตรม.', price: 115.00, unit: 'ตรม.' },
+		{ name: 'เซาะร่องกว้าง 2-5 mm ลึก 2 มิล 2 เส้น 60 cm / ตรม.', price: 195.00, unit: 'ตรม.' },
+		{ name: 'เซาะร่องกว้าง 2-5 mm ลึก 5 มิล 3 เส้น 60 cm / ตรม.', price: 275.00, unit: 'ตรม.' }
+    ];
+
+    function populateServiceOptions() {
+        serviceSelect.innerHTML = ''; // Clear existing options
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'เลือกรายการบริการ';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        serviceSelect.appendChild(defaultOption);
+
+        servicePrices.forEach((service, index) => {
+            const option = document.createElement('option');
+            option.value = index; // Use index as value to easily retrieve price
+            option.textContent = service.name;
+            serviceSelect.appendChild(option);
+        });
+    }
+
+    function updateUnitDisplay() {
+        const selectedIndex = serviceSelect.value;
+        if (selectedIndex !== '') {
+            unitDisplay.textContent = servicePrices[selectedIndex].unit;
+        } else {
+            unitDisplay.textContent = '';
+        }
+        resetInstallationResults(); // Reset results when service changes
+    }
+
+    function calculateInstallationCost() {
+        const selectedIndex = serviceSelect.value;
+        const quantity = parseFloat(quantityInput.value);
+
+        if (selectedIndex === '' || isNaN(quantity) || quantity < 0) {
+            alert('กรุณาเลือกรายการบริการและระบุจำนวนให้ถูกต้อง');
+            resetInstallationResults();
+            return;
+        }
+
+        const selectedService = servicePrices[selectedIndex];
+        const totalCost = selectedService.price * quantity;
+
+        displayService.textContent = selectedService.name;
+        displayQuantity.textContent = `${quantity.toFixed(2)} ${selectedService.unit}`;
+        displayUnitPrice.textContent = selectedService.price.toFixed(2);
+        totalInstallationCost.textContent = totalCost.toFixed(2);
+    }
+
+    function resetInstallationResults() {
+        displayService.textContent = 'N/A';
+        displayQuantity.textContent = 'N/A';
+        displayUnitPrice.textContent = '0.00';
+        totalInstallationCost.textContent = '0.00';
+    }
+
+    // Event Listeners
+    serviceSelect.addEventListener('change', updateUnitDisplay);
+    calculateInstallationBtn.addEventListener('click', calculateInstallationCost);
+    quantityInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            calculateInstallationCost();
+        }
+    });
+
+    // Initial setup
+    populateServiceOptions();
+    updateUnitDisplay(); // Set initial unit display
+    resetInstallationResults(); // Ensure results are reset on load
+});
