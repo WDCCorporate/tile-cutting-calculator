@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const servicePrices = [
         { name: 'รื้อพื้นไม้ Laminate ,SPC พร้อมขนทิ้ง', price: 135.00, unit: 'ตรม.' },
         { name: 'ปรับพื้นสกินผิวหน้า (การปรับแต่งผิวหน้าไม่เรียบ)', price: 135.00, unit: 'ตรม.' },
-        { name: 'ปรับพื้นไม่เกิน 3-5 cm. (ปูน Self เทปรับผิวหน้า)', price: 330.00, unit: 'ตรม.' },
+        { name: 'ปรับพื้นไม่เกิน 3-5 mm. (ปูน Self เทปรับผิวหน้า)', price: 330.00, unit: 'ตรม.' },
         { name: 'ติดตั้ง Laminate ,SPC ,กระเบื้องยางปูกาว + บัวตัวจบช่าง (บัว 2")', price: 200.00, unit: 'ตรม.' },
         { name: 'ติดตั้ง Laminate ,SPC ,กระเบื้องยางปูกาว + บัวตัวจบช่าง (บัว 4")', price: 200.00, unit: 'ตรม.' },
         { name: 'ติดตั้ง Laminate ,SPC (บัว WDC)', price: 200.00, unit: 'ตรม.' },
